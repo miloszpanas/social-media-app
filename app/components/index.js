@@ -5,3 +5,5 @@ export {default as Footer} from "./Footer";
 export {default as About} from "./About";
 export {default as Terms} from "./Terms";
 export {default as Home} from "./Home";
+export {default as ViewSinglePost} from "./ViewSinglePost";
+export {default as FlashMessages} from "./FlashMessages";

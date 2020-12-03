@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const HeaderLoggedIn = ({ setLoggedIn }) => {
 
+  const history = useHistory();
+
   const handleLogOut = () => {
     setLoggedIn(false);
+    history.push("/");
     localStorage.removeItem("complexAppToken");
     localStorage.removeItem("complexAppUsername");
     localStorage.removeItem("complexAppAvatar");

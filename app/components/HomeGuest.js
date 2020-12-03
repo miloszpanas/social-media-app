@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Page from "./Page";
-import Axios from "axios";
+import axios from "axios";
 
 const HomeGuest = () => {
 
@@ -22,7 +22,7 @@ const HomeGuest = () => {
     const { username, email, password } = formValues;
     e.preventDefault()
     try {
-      await Axios.post("http://localhost:8080/register", { username, email, password })
+      await axios.post("/register", { username, email, password })
       console.log("User was successfully created.")
     } catch (e) {
       console.log("There was an error.")
