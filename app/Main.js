@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // components
-import Header from "./components/Header";
-import HomeGuest from "./components/HomeGuest";
-import Footer from "./components/Footer";
-import About from "./components/About"
-import Terms from "./components/Terms"
+import {
+  CreatePost,
+  Header,
+  HomeGuest,
+  Footer,
+  About,
+  Terms,
+  Home,
+} from "./components";
 
 const Main = () => {
+  const [loggedIn, setLoggedIn] = useState(
+    Boolean(localStorage.getItem("complexAppToken"))
+  );
+
   return (
     <Router>
-      <Header />
+      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Switch>
-        <Route path="/" exact component={HomeGuest}/>
-        <Route path="/about-us" exact component={About}/>
-        <Route path="/terms" exact component={Terms}/>
+        <Route path="/" exact>
+          {loggedIn ? <Home /> : <HomeGuest />}
+        </Route>
+        <Route path="/about-us" exact component={About} />
+        <Route path="/terms" exact component={Terms} />
+        <Route path="/create-post" component={CreatePost} />
       </Switch>
       <Footer />
     </Router>

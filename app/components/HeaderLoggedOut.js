@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Axios from "axios"
+import axios from "axios"
 
 const HeaderLoggedOut = ({ setLoggedIn }) => {
   const [formValues, setFormValues] = useState({
@@ -19,7 +19,7 @@ const HeaderLoggedOut = ({ setLoggedIn }) => {
     const { username, password } = formValues;
     e.preventDefault();
     try {
-      const response = await Axios.post("http://localhost:8080/login", { username, password });
+      const response = await axios.post("http://localhost:8080/login", { username, password });
       if (response.data) {
         localStorage.setItem("complexAppToken", response.data.token)
         localStorage.setItem("complexAppUsername", response.data.username)
@@ -29,7 +29,7 @@ const HeaderLoggedOut = ({ setLoggedIn }) => {
         console.log("incorrect username/password");
       }
     } catch(e) {
-      console.log("There was a problem");
+      console.log(e, "There was a problem");
     }
   }
 

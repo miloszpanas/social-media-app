@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import HeaderLoggedIn from "./HeaderLoggedIn";
 import HeaderLoggedOut from "./HeaderLoggedOut";
 
-const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("complexAppToken")));
+const Header = ({ loggedIn, setLoggedIn }) => {
 
   return (
     <header className="header-bar bg-primary mb-3">
@@ -15,9 +14,9 @@ const Header = () => {
           </Link>
         </h4>
         {loggedIn ? (
-          <HeaderLoggedIn setLoggedIn={setLoggedIn} />
+          <HeaderLoggedIn setLoggedIn={setLoggedIn}/>
         ) : (
-          <HeaderLoggedOut setLoggedIn={setLoggedIn} />
+          <HeaderLoggedOut setLoggedIn={setLoggedIn}/>
         )}
       </div>
     </header>
