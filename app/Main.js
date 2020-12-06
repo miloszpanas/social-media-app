@@ -29,6 +29,8 @@ const Main = () => {
     flashMessages: []
   };
 
+  // todo CONTINUE FROM 35 useeffect practice
+
   function OurReducer(state, action) {
     switch(action.type) {
       case "login":
