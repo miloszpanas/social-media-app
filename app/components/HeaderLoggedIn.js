@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import ExampleContext from "../ExampleContext";
+import DispatchContext from "../DispatchContext";
 
 const HeaderLoggedIn = () => {
 
-  const { setLoggedIn } = useContext(ExampleContext);
+  const appDispatch = useContext(DispatchContext);
 
   const history = useHistory();
 
   const handleLogOut = () => {
-    setLoggedIn(false);
+    appDispatch({ type: "logout" })
     history.push("/");
     localStorage.removeItem("complexAppToken");
     localStorage.removeItem("complexAppUsername");

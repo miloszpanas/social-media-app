@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import Page from "./Page";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import ExampleContext from "../ExampleContext";
+import DispatchContext from "../DispatchContext";
 
 const CreatePost = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const CreatePost = () => {
     body: "",
   });
 
-  const {addFlashMessage} = useContext(ExampleContext)
+  const appDispatch = useContext(DispatchContext)
 
   const [idReturnedFromServer, setIdReturnedFromServer] = useState(false);
 
@@ -39,7 +39,7 @@ const CreatePost = () => {
   };
 
   if (idReturnedFromServer) {
-    addFlashMessage("The message was posted");
+    appDispatch({ type: "flashMessage", value: "Congrats, new post was created" })
     return <Redirect to={`/post/${idReturnedFromServer}`}/>
   }
 

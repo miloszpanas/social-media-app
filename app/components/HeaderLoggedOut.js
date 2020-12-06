@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import axios from "axios"
-import ExampleContext from "../ExampleContext";
+import DispatchContext from "../DispatchContext";
 
 const HeaderLoggedOut = () => {
   const [formValues, setFormValues] = useState({
@@ -8,7 +8,7 @@ const HeaderLoggedOut = () => {
     password: ""
   });
 
-  const { setLoggedIn } = useContext(ExampleContext);
+  const appDispatch = useContext(DispatchContext);
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -27,7 +27,7 @@ const HeaderLoggedOut = () => {
         localStorage.setItem("complexAppToken", response.data.token)
         localStorage.setItem("complexAppUsername", response.data.username)
         localStorage.setItem("complexAppAvatar", response.data.avatar)
-        setLoggedIn(true)
+        appDispatch({ type: "login" })
       } else {
         console.log("incorrect username/password");
       }
