@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios"
+import ExampleContext from "../ExampleContext";
 
-const HeaderLoggedOut = ({ setLoggedIn }) => {
+const HeaderLoggedOut = () => {
   const [formValues, setFormValues] = useState({
     username: "",
     password: ""
   });
+
+  const { setLoggedIn } = useContext(ExampleContext);
 
   const handleInputChange = e => {
     const { name, value } = e.target;

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Page from "./Page";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import ExampleContext from "../ExampleContext";
 
-const CreatePost = ({ addFlashMessage }) => {
+const CreatePost = () => {
   const [formData, setFormData] = useState({
     title: "",
     body: "",
   });
+
+  const {addFlashMessage} = useContext(ExampleContext)
 
   const [idReturnedFromServer, setIdReturnedFromServer] = useState(false);
 

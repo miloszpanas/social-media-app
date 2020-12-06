@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import ExampleContext from "../ExampleContext";
 
-const HeaderLoggedIn = ({ setLoggedIn }) => {
+const HeaderLoggedIn = () => {
+
+  const { setLoggedIn } = useContext(ExampleContext);
 
   const history = useHistory();
 

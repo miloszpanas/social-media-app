@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import axios from "axios";
@@ -17,11 +17,13 @@ import {
   ViewSinglePost,
   FlashMessages
 } from "./components";
+import ExampleContext from "./ExampleContext";
 
 const Main = () => {
   const [loggedIn, setLoggedIn] = useState(
     Boolean(localStorage.getItem("complexAppToken"))
   );
+
 
   const [flashMessages, setFlashMessages] = useState([]);
 
@@ -31,22 +33,24 @@ const Main = () => {
   }
 
   return (
-    <Router>
-      <FlashMessages messages={flashMessages} />
-      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-      <Switch>
-        <Route path="/" exact>
-          {loggedIn ? <Home /> : <HomeGuest />}
-        </Route>
-        <Route path="/about-us" exact component={About} />
-        <Route path="/terms" exact component={Terms} />
-        <Route path="/create-post">
-          <CreatePost addFlashMessage={addFlashMessage}/>
-        </Route>
-        <Route path="/post/:id" component={ViewSinglePost}/>
-      </Switch>
-      <Footer />
-    </Router>
+    <ExampleContext.Provider value={{addFlashMessage, setLoggedIn}}>
+      <Router>
+        <FlashMessages messages={flashMessages} />
+        <Header loggedIn={loggedIn} />
+        <Switch>
+          <Route path="/" exact>
+            {loggedIn ? <Home /> : <HomeGuest />}
+          </Route>
+          <Route path="/about-us" exact component={About} />
+          <Route path="/terms" exact component={Terms} />
+          <Route path="/create-post">
+            <CreatePost/>
+          </Route>
+          <Route path="/post/:id" component={ViewSinglePost}/>
+        </Switch>
+        <Footer />
+      </Router>
+    </ExampleContext.Provider>
   );
 };
 
