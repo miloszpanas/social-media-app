@@ -29,7 +29,7 @@ const Main = () => {
     flashMessages: []
   };
 
-  // todo CONTINUE FROM 35 useeffect practice
+  // todo CONTINUE FROM 34 Immer
 
   function OurReducer(state, action) {
     switch(action.type) {
