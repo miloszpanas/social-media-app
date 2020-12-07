@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Page from "./Page";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import LoadingDotsIcon from "./LoadingDotsIcon";
 
 const ViewSinglePost = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +24,7 @@ const ViewSinglePost = () => {
     fetchData();
   }, [])
 
-  if (isLoading) return <Page title="..."><div>Loading...</div></Page>
+  if (isLoading) return <Page title="..."><LoadingDotsIcon /></Page>
 
   return (
     <Page title={post.title}>
