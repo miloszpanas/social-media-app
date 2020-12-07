@@ -3,6 +3,7 @@ import Page from "./Page";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
 
 const CreatePost = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +11,8 @@ const CreatePost = () => {
     body: "",
   });
 
-  const appDispatch = useContext(DispatchContext)
+  const appDispatch = useContext(DispatchContext);
+  const appState = useContext(StateContext);
 
   const [idReturnedFromServer, setIdReturnedFromServer] = useState(false);
 
@@ -29,7 +31,7 @@ const CreatePost = () => {
       const response = await axios.post("/create-post", {
         title,
         body,
-        token: localStorage.getItem("complexAppToken"),
+        token: appState.user.token,
       });
       console.log("post created");
       setIdReturnedFromServer(response.data);

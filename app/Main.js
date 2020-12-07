@@ -1,9 +1,10 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useImmerReducer } from "use-immer";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:8080"
+axios.defaults.baseURL = "http://localhost:8080";
 
 import StateContext from "./StateContext";
 import DispatchContext from "./DispatchContext";
@@ -18,32 +19,49 @@ import {
   Terms,
   Home,
   ViewSinglePost,
-  FlashMessages
+  FlashMessages,
+  Profile
 } from "./components";
 
-
 const Main = () => {
-
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("complexAppToken")),
-    flashMessages: []
+    flashMessages: [],
+    user: {
+      token: localStorage.getItem("complexAppToken"),
+      username: localStorage.getItem("complexAppUsername"),
+      avatar: localStorage.getItem("complexAppAvatar"),
+    }
   };
 
-  // todo CONTINUE FROM 34 Immer
-
-  function OurReducer(state, action) {
-    switch(action.type) {
+  function OurReducer(draft, action) {
+    switch (action.type) {
       case "login":
-        return {loggedIn: true, flashMessages: state.flashMessages};
+        draft.loggedIn = true;
+        draft.user = action.data;
+        return;
       case "logout":
-        return {loggedIn: false, flashMessages: state.flashMessages};
+        draft.loggedIn = false;
+        return;
       case "flashMessage":
-        return { loggedIn: state.loggedIn, flashMessages: [ ...state.flashMessages, action.value ]};
+        draft.flashMessages.push(action.value);
+        return;
     }
   }
 
-  const [state, dispatch] = useReducer(OurReducer, initialState);
+  const [state, dispatch] = useImmerReducer(OurReducer, initialState);
 
+  useEffect(() => {
+    if (state.loggedIn) {
+      localStorage.setItem("complexAppToken", state.user.token)
+      localStorage.setItem("complexAppUsername", state.user.username)
+      localStorage.setItem("complexAppAvatar", state.user.avatar)
+    } else {
+      localStorage.removeItem("complexAppToken");
+      localStorage.removeItem("complexAppUsername");
+      localStorage.removeItem("complexAppAvatar");
+    }
+  }, [state.loggedIn])
 
   return (
     <StateContext.Provider value={state}>
@@ -58,9 +76,10 @@ const Main = () => {
             <Route path="/about-us" exact component={About} />
             <Route path="/terms" exact component={Terms} />
             <Route path="/create-post">
-              <CreatePost/>
+              <CreatePost />
             </Route>
-            <Route path="/post/:id" component={ViewSinglePost}/>
+            <Route path="/post/:id" component={ViewSinglePost} />
+            <Route path="/profile/:username" component={Profile}/>
           </Switch>
           <Footer />
         </Router>

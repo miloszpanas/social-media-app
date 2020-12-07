@@ -7,3 +7,4 @@ export {default as Terms} from "./Terms";
 export {default as Home} from "./Home";
 export {default as ViewSinglePost} from "./ViewSinglePost";
 export {default as FlashMessages} from "./FlashMessages";
+export {default as Profile} from "./Profile";
