@@ -12,6 +12,7 @@ import {
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import StateContext from "../StateContext";
+import DispatchContext from "../DispatchContext";
 
 const EditPost = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,6 +21,7 @@ const EditPost = () => {
   const [formValues, setFormValues] = useState({});
   const { id } = useParams();
   const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext)
   const history = useHistory();
 
   useEffect(() => {
@@ -71,6 +73,7 @@ const EditPost = () => {
             }
           ),
             console.log("post created");
+          appDispatch({ type: "flashMessage", value: "Post was updated" })
           history.push(`/post/${id}`);
         } catch (e) {
           console.log(e, "there was an error");
