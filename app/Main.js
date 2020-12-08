@@ -20,7 +20,8 @@ import {
   Home,
   ViewSinglePost,
   FlashMessages,
-  Profile
+  Profile,
+  EditPost
 } from "./components";
 
 const Main = () => {
@@ -73,12 +74,15 @@ const Main = () => {
             <Route path="/" exact>
               {state.loggedIn ? <Home /> : <HomeGuest />}
             </Route>
-            <Route path="/about-us" exact component={About} />
-            <Route path="/terms" exact component={Terms} />
+            <Route path="/about-us" component={About} />
+            <Route path="/terms" component={Terms} />
             <Route path="/create-post">
               <CreatePost />
             </Route>
-            <Route path="/post/:id" component={ViewSinglePost} />
+            <Route path="/post/:id/edit" exact>
+              <EditPost />
+            </Route>
+            <Route path="/post/:id" exact component={ViewSinglePost} />
             <Route path="/profile/:username" component={Profile}/>
           </Switch>
           <Footer />

@@ -173,7 +173,7 @@ textarea.tall-textarea {
 }
 
 .delete-post-button {
-  cursor: pointer;
+  cursor: pointer !important;
   background: none;
   border: none;
   padding: 0;
