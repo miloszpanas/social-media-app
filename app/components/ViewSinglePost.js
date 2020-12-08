@@ -10,9 +10,12 @@ const ViewSinglePost = () => {
   const {id} = useParams();
 
   useEffect(() => {
+    // clean up variable needed to clear axios request
+    const ourRequest = axios.CancelToken.source()
+
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/post/${id}`);
+        const response = await axios.get(`/post/${id}`, {cancelToken: ourRequest.token});
         setPost(response.data);
         console.log(response.data);
         setIsLoading(false);
@@ -22,6 +25,11 @@ const ViewSinglePost = () => {
     };
 
     fetchData();
+
+    // cleaning up
+    return () => {
+      ourRequest.cancel();
+    }
   }, [])
 
   if (isLoading) return <Page title="..."><LoadingDotsIcon /></Page>

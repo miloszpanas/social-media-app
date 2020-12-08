@@ -3,17 +3,17 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import LoadingDotsIcon from "./LoadingDotsIcon";
 
-const ProfilePosts = ({ profileData }) => {
+const ProfilePosts = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const { username } = useParams();
 
   useEffect(() => {
+    const myRequest = axios.CancelToken.source();
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/profile/${username}/posts`);
+        const response = await axios.get(`/profile/${username}/posts`, {cancelToken: myRequest.token});
         setPosts(response.data);
-        console.log(response.data);
         setIsLoading(false);
       } catch (e) {
         console.log("there was an error");
@@ -21,6 +21,10 @@ const ProfilePosts = ({ profileData }) => {
     };
 
     fetchData();
+
+    return () => {
+      myRequest.cancel();
+    }
   }, []);
 
   if (isLoading) return <LoadingDotsIcon />;
